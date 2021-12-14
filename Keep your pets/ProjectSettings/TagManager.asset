@@ -6,6 +6,12 @@ TagManager:
   tags:
   - Owner
   - FinishDir
+  - Road
+  - Distraction
+  - Finale
+  - PreFinale
+  - Multiplier
+  - DogSpowner
   layers:
   - Default
   - TransparentFX

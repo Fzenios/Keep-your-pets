@@ -33,7 +33,6 @@ public class LeashScr : MonoBehaviour
             segmentPoses[i] = Vector3.SmoothDamp(segmentPoses[i], segmentPoses[i - 1] + targetDir.right * targetDist, ref segmentV[i], smoothSpeed);
         }
         segmentPoses[segmentPoses.Length-1] = FinishtDir.position;
-        lineRend.SetPositions(segmentPoses);
-        
+        lineRend.SetPositions(segmentPoses);   
     }
 }
