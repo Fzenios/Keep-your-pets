@@ -12,7 +12,6 @@ public class PlayerScr : MonoBehaviour
     public Transform DogSpownPos;
     public GameObject DogPre;
     public GameMechanic gameMechanic;
-    public int FinalScore;
     public int MultiplierCount;
     public Joystick joystick;
     public Vector3 PlayerMovement;
@@ -86,13 +85,14 @@ public class PlayerScr : MonoBehaviour
     IEnumerator CountScore()
     {   
         yield return new WaitForSeconds(13f);
-        FinalScore = gameMechanic.CoinsCount * MultiplierCount;
-        Debug.Log(FinalScore);      
+        gameMechanic.FinalCoinsCount = gameMechanic.CoinsCount * MultiplierCount;    
+        gameMechanic.ShowScore = true;
+        gameMechanic.CoinsObj.SetActive(false);
+        gameMechanic.FinalScoreObj.SetActive(true);
     }
 
     public void DogSpown()
     {      
         Instantiate(DogPre, DogSpownPos.position, Quaternion.identity, transform.parent);
     }
-
 }
