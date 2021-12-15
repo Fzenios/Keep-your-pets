@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class GameMechanic : MonoBehaviour
 {
     public int PetsCount;
     public int CoinsCount;
+    public TMP_Text Coinstxt;
 
     void Start()
     {
@@ -14,6 +16,6 @@ public class GameMechanic : MonoBehaviour
 
     void Update()
     {
-        Debug.Log(PetsCount);
+        Coinstxt.text = "Coins: " + CoinsCount;
     }
 }

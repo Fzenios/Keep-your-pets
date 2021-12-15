@@ -48,7 +48,7 @@ GameObject:
   - component: {fileID: 4126263228045293111}
   m_Layer: 3
   m_Name: Pet
-  m_TagString: Untagged
+  m_TagString: Pet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -61,7 +61,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4126263228045293119}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.635, y: -1.18, z: -7.879}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.18401, y: 0.18401, z: 0.18401}
   m_Children:
   - {fileID: 4126263227485410672}
@@ -158,18 +158,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 025b04d1ef0972e41a4d59b3e943f657, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  FrontSpeed: 600
-  SideSpeed: 40
-  CurrentSpeed: 0
-  SlowSpeed: 550
-  FastSpeed: 650
-  SuperFastSpeed: 700
-  SuperSlowSpeed: 500
-  Front: 0
-  Left: 97
-  Right: 100
-  Player: {fileID: 0}
-  PetBoost: {x: 7, y: 0, z: 0}
+  FrontSpeed: 1
+  SideSpeed: 6
+  PetMovement: {x: 0, y: 0, z: 0}
 --- !u!114 &4126263228045293108
 MonoBehaviour:
   m_ObjectHideFlags: 0

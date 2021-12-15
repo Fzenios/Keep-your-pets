@@ -12,6 +12,8 @@ TagManager:
   - PreFinale
   - Multiplier
   - DogSpowner
+  - Collectables
+  - Pet
   layers:
   - Default
   - TransparentFX

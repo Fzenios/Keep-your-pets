@@ -4,60 +4,52 @@ using UnityEngine;
 
 public class PetScr : MonoBehaviour
 {
-    Rigidbody PlayerRb;
-    public float FrontSpeed, SideSpeed, CurrentSpeed, SlowSpeed, FastSpeed, SuperSlowSpeed;
-    public KeyCode Left, Right; 
-    float Distance;
+    Rigidbody PetRb;
+    public float FrontSpeed, SideSpeed;
     Transform PlayerPos;
     bool FinaleBool;
     LineRenderer lineRenderer;
     Vector3 PetBoost;
     GameMechanic gameMechanic;
+    Joystick joystick;
+    public Vector3 PetMovement;
     void Start()
     {
-        PlayerRb = GetComponent<Rigidbody>();
+        PetRb = GetComponent<Rigidbody>();
         PlayerPos = GameObject.FindGameObjectWithTag("Owner").transform;
         lineRenderer = gameObject.GetComponent<LineRenderer>();
-
         gameMechanic = GameObject.FindObjectOfType<GameMechanic>();
+        joystick = GameMechanic.FindObjectOfType<Joystick>();
 
-        CurrentSpeed = FrontSpeed;
         FinaleBool = false;
 
         gameMechanic.PetsCount ++;
+        PetMovement.z = FrontSpeed;
     }
 
      void Update()
     {
         if(!FinaleBool)
         {
-            Distance = Vector3.Distance(transform.position, PlayerPos.position);
-            if(Distance >= 8)
-                CurrentSpeed = SlowSpeed;
-            else if (Distance >= 6 && Distance <= 7.9f)
-                CurrentSpeed = SuperSlowSpeed;    
-            else if (Distance <= 1.8f)
-                CurrentSpeed = FastSpeed;
-            else CurrentSpeed = FrontSpeed;
-            }
-        
-       // Debug.Log(Distance);
+            //for pc
+            PetMovement.x = Input.GetAxisRaw("Horizontal");
+            
+            //ForMobile
+            if(joystick.Horizontal > 0.7f)
+                PetMovement.x = joystick.Horizontal;            
+            else if(joystick.Horizontal < -0.7)
+                PetMovement.x = joystick.Horizontal;
+            /*else 
+                PetMovement.x = 0;  */
+        }
     }
     void FixedUpdate() 
-    {
-        PlayerRb.AddForce(0, 0, CurrentSpeed * Time.deltaTime);
-        
+    {        
         if(!FinaleBool)
-        {
-            if(Input.GetKey(Left))
-            {
-                PlayerRb.AddForce(-SideSpeed, 0, 0 * Time.deltaTime);
-            } 
-            if(Input.GetKey(Right))
-            {
-                PlayerRb.AddForce(SideSpeed, 0, 0 * Time.deltaTime);
-            }   
+        {   
+            PetRb.MovePosition(PetRb.position + PetMovement * SideSpeed * Time.deltaTime);
         }
+        
     }
     void OnCollisionEnter(Collision other)
     {
@@ -77,14 +69,17 @@ public class PetScr : MonoBehaviour
         if(other.tag == "Finale")
         {
             FinaleBool = true;
-            CurrentSpeed = 0;
             lineRenderer.enabled = false;
             int RandomX = Random.Range(0,2);
             if(RandomX == 0)
-                PetBoost = new Vector3(12,0,2);
+                PetBoost = new Vector3(15,0,2);
             else
-                PetBoost = new Vector3(-12,0,2); 
-            PlayerRb.AddForce(PetBoost, ForceMode.Impulse);
-        }         
+                PetBoost = new Vector3(-15,0,2); 
+            PetRb.AddForce(PetBoost, ForceMode.Impulse);
+        }  
+        if(other.tag == "Collectables")
+        {
+            gameMechanic.CoinsCount ++;
+        }       
     }
 }

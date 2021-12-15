@@ -6,38 +6,43 @@ public class PlayerScr : MonoBehaviour
 {
     Rigidbody PlayerRb;
     public float FrontSpeed, SideSpeed;
-    public KeyCode Front, Left, Right; 
     public GameObject DogColliders, DogColliders2;
     public Vector3 PlayerBoost;
     bool Finale;
     public Transform DogSpownPos;
     public GameObject DogPre;
     public GameMechanic gameMechanic;
+    public int FinalScore;
+    public int MultiplierCount;
+    public Joystick joystick;
+    public Vector3 PlayerMovement;
 
     void Start()
     {
         PlayerRb = GetComponent<Rigidbody>();
         Finale = false;
+        MultiplierCount = 1;
+        PlayerMovement.z = FrontSpeed;
+    }
+    void Update() 
+    {
+        //for pc
+        PlayerMovement.x = Input.GetAxisRaw("Horizontal");     
+        
+        //ForMobile
+        if(joystick.Horizontal > 0.7f)
+            PlayerMovement.x = joystick.Horizontal;            
+        else if(joystick.Horizontal < -0.7)
+            PlayerMovement.x = joystick.Horizontal;  
+        /*else 
+        PlayerMovement.x = 0;  */
     }
 
-    void Update()
-    {
-        
-    }
     void FixedUpdate() 
     {
         if(!Finale)
         {
-            PlayerRb.AddForce(0, 0, FrontSpeed * Time.deltaTime);
-            
-            if(Input.GetKey(Left))
-            {
-                PlayerRb.AddForce(-SideSpeed, 0, 0 * Time.deltaTime);
-            } 
-            if(Input.GetKey(Right))
-            {
-                PlayerRb.AddForce(SideSpeed, 0, 0 * Time.deltaTime);
-            }  
+            PlayerRb.MovePosition(PlayerRb.position + PlayerMovement * SideSpeed * Time.deltaTime);
         }
     }
     void OnTriggerEnter(Collider other) 
@@ -51,13 +56,20 @@ public class PlayerScr : MonoBehaviour
         if(other.tag == "Finale")
         {
             StartCoroutine(PlayerPush());
+            StartCoroutine(CountScore());
         }  
         if(other.tag == "DogSpowner")   
         {
             DogSpown();
-            
-           // Debug.Log(gameMechanic.PetsCount);
         }  
+        if(other.tag == "Collectables")
+        {
+            gameMechanic.CoinsCount ++;
+        }
+        if(other.tag == "Multiplier")
+        {
+            MultiplierCount ++;
+        }
     }
     IEnumerator PlayerPush()
     {   
@@ -71,9 +83,15 @@ public class PlayerScr : MonoBehaviour
         PlayerBoost = new Vector3(0, 40, PlayerBoostX);
         PlayerRb.AddForce(PlayerBoost, ForceMode.Impulse);
     }
+    IEnumerator CountScore()
+    {   
+        yield return new WaitForSeconds(13f);
+        FinalScore = gameMechanic.CoinsCount * MultiplierCount;
+        Debug.Log(FinalScore);      
+    }
 
     public void DogSpown()
-    {
+    {      
         Instantiate(DogPre, DogSpownPos.position, Quaternion.identity, transform.parent);
     }
 
