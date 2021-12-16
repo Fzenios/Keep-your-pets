@@ -45,6 +45,8 @@ public class GameMechanic : MonoBehaviour
            {
                 ScoreCounting -= Time.deltaTime * 70;
                 TotalCoins += Time.deltaTime * 70;
+                if(ScoreCounting < 0)
+                    ScoreCounting = 0;
            }
            else
            {

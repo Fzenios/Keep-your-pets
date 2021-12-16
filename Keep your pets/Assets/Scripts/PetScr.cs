@@ -13,6 +13,8 @@ public class PetScr : MonoBehaviour
     GameMechanic gameMechanic;
     Joystick joystick;
     public Vector3 PetMovement;
+    GameMenuScr gameMenuScr;
+    PlayerScr playerScr;
     void Start()
     {
         PetRb = GetComponent<Rigidbody>();
@@ -20,6 +22,8 @@ public class PetScr : MonoBehaviour
         lineRenderer = gameObject.GetComponent<LineRenderer>();
         gameMechanic = GameObject.FindObjectOfType<GameMechanic>();
         joystick = GameMechanic.FindObjectOfType<Joystick>();
+        gameMenuScr = GameObject.FindObjectOfType<GameMenuScr>();
+        playerScr = GameObject.FindObjectOfType<PlayerScr>();
 
         FinaleBool = false;
 
@@ -45,9 +49,15 @@ public class PetScr : MonoBehaviour
     }
     void FixedUpdate() 
     {        
-        if(!FinaleBool)
-        {   
-            PetRb.MovePosition(PetRb.position + PetMovement * SideSpeed * Time.deltaTime);
+        if(!playerScr.ManualPauseGame)
+        {
+            if(!gameMenuScr.PauseGame)
+            {
+                if(!FinaleBool)
+                {   
+                    PetRb.MovePosition(PetRb.position + PetMovement * SideSpeed * Time.deltaTime);
+                }
+            }
         }
         
     }

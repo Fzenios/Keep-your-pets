@@ -1,0 +1,74 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &4246706866324712985
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4246706866324712983}
+  - component: {fileID: 4246706866324712984}
+  - component: {fileID: 4246706866324712982}
+  m_Layer: 0
+  m_Name: PublicScripts
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4246706866324712983
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4246706866324712985}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 5.3270884, y: 1.6486437, z: -599.0491}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4246706866324712984
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4246706866324712985}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 114a48d461128c14c8edb54cb450c4a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PetsCount: 0
+  CoinsCount: 0
+  FinalCoinsCount: 0
+  TotalCoins: 0
+  Coinstxt: {fileID: 0}
+  FinalCoinsTxt: {fileID: 0}
+  TotalCoinsTxt: {fileID: 0}
+  ShowScore: 0
+  CollectCoinsBool: 0
+  CoinsObj: {fileID: 0}
+  FinalScoreObj: {fileID: 0}
+  TotalCoinsObj: {fileID: 0}
+  CollectBtnObj: {fileID: 0}
+  NextLvlBtnObj: {fileID: 0}
+--- !u!114 &4246706866324712982
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4246706866324712985}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df7907bedfdbfe44bbe42a0ca7ff9c2b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollectCoinsBool: 0
+  gameMechanic: {fileID: 0}

@@ -15,6 +15,9 @@ public class PlayerScr : MonoBehaviour
     public int MultiplierCount;
     public Joystick joystick;
     public Vector3 PlayerMovement;
+    public GameMenuScr gameMenuScr;
+    public bool ManualPauseGame;
+    public GameObject StartCounter;
 
     void Start()
     {
@@ -22,6 +25,8 @@ public class PlayerScr : MonoBehaviour
         Finale = false;
         MultiplierCount = 1;
         PlayerMovement.z = FrontSpeed;
+        gameMenuScr.PauseGame = false;
+        StartCoroutine(StartGame());
     }
     void Update() 
     {
@@ -39,9 +44,15 @@ public class PlayerScr : MonoBehaviour
 
     void FixedUpdate() 
     {
-        if(!Finale)
+        if(!ManualPauseGame)
         {
-            PlayerRb.MovePosition(PlayerRb.position + PlayerMovement * SideSpeed * Time.deltaTime);
+            if(!gameMenuScr.PauseGame)
+            {
+                if(!Finale)
+                {
+                    PlayerRb.MovePosition(PlayerRb.position + PlayerMovement * SideSpeed * Time.deltaTime);
+                }
+            }
         }
     }
     void OnTriggerEnter(Collider other) 
@@ -89,6 +100,16 @@ public class PlayerScr : MonoBehaviour
         gameMechanic.ShowScore = true;
         gameMechanic.CoinsObj.SetActive(false);
         gameMechanic.FinalScoreObj.SetActive(true);
+    }
+    IEnumerator StartGame()
+    {   
+        yield return new WaitForSeconds(0.2f);
+        ManualPauseGame = true;
+        StartCounter.SetActive(true);
+        yield return new WaitForSeconds(4f);
+        ManualPauseGame = false;
+        StartCounter.SetActive(false);
+        
     }
 
     public void DogSpown()

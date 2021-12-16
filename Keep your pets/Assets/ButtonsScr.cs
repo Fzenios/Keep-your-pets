@@ -1,29 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class ButtonsScr : MonoBehaviour
-{
-    public bool CollectCoinsBool;
-    public GameMechanic gameMechanic;
-    int CoinsToGive;
+{   
 
-    void Update() 
+    public void PlayGame()
     {
-        if(CollectCoinsBool)
-        {
-            if(gameMechanic.FinalCoinsCount > 0)
-                gameMechanic.FinalCoinsCount -= (int)(Time.deltaTime * 40);
-            
-        }
-        
+        SceneManager.LoadScene(1);
     }
-
-
-    public void CollectCoins()
+    public void ExitGame()
     {
-        CoinsToGive = gameMechanic.FinalCoinsCount;
+        Application.Quit();
     }
-
-
 }
