@@ -18,13 +18,15 @@ public class PlayerScr : MonoBehaviour
     public GameMenuScr gameMenuScr;
     public bool ManualPauseGame;
     public GameObject StartCounter;
+    public Animator animator;
+    public GameObject PauseBtnObj;
 
     void Start()
     {
         PlayerRb = GetComponent<Rigidbody>();
         Finale = false;
         MultiplierCount = 1;
-        PlayerMovement.z = FrontSpeed;
+        PlayerMovement.z = 0;
         gameMenuScr.PauseGame = false;
         StartCoroutine(StartGame());
     }
@@ -44,6 +46,7 @@ public class PlayerScr : MonoBehaviour
 
     void FixedUpdate() 
     {
+        animator.SetFloat("movement", PlayerMovement.z);
         if(!ManualPauseGame)
         {
             if(!gameMenuScr.PauseGame)
@@ -51,6 +54,7 @@ public class PlayerScr : MonoBehaviour
                 if(!Finale)
                 {
                     PlayerRb.MovePosition(PlayerRb.position + PlayerMovement * SideSpeed * Time.deltaTime);
+                    
                 }
             }
         }
@@ -83,19 +87,25 @@ public class PlayerScr : MonoBehaviour
     }
     IEnumerator PlayerPush()
     {   
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(0.5f);
         Finale = true;
         
-        int PlayerBoostX = 50 + (gameMechanic.PetsCount * 10);
+        int PlayerBoostX = 60 + (gameMechanic.PetsCount * 10);
         if(PlayerBoostX >= 160)
             PlayerBoostX = 160;
 
         PlayerBoost = new Vector3(0, 40, PlayerBoostX);
         PlayerRb.AddForce(PlayerBoost, ForceMode.Impulse);
+        animator.SetBool("Falling", true);
+        yield return new WaitForSeconds(10f);
+        animator.SetBool("Falling", false);
+        animator.SetBool("Swim", true);
+
     }
     IEnumerator CountScore()
     {   
         yield return new WaitForSeconds(13f);
+        PauseBtnObj.SetActive(false);
         gameMechanic.FinalCoinsCount = gameMechanic.CoinsCount * MultiplierCount;    
         gameMechanic.ShowScore = true;
         gameMechanic.CoinsObj.SetActive(false);
@@ -109,6 +119,7 @@ public class PlayerScr : MonoBehaviour
         yield return new WaitForSeconds(4f);
         ManualPauseGame = false;
         StartCounter.SetActive(false);
+        PlayerMovement.z = FrontSpeed;
         
     }
 

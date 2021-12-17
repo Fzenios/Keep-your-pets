@@ -15,6 +15,7 @@ public class PetScr : MonoBehaviour
     public Vector3 PetMovement;
     GameMenuScr gameMenuScr;
     PlayerScr playerScr;
+    public Animator animator;
     void Start()
     {
         PetRb = GetComponent<Rigidbody>();
@@ -24,7 +25,6 @@ public class PetScr : MonoBehaviour
         joystick = GameMechanic.FindObjectOfType<Joystick>();
         gameMenuScr = GameObject.FindObjectOfType<GameMenuScr>();
         playerScr = GameObject.FindObjectOfType<PlayerScr>();
-
         FinaleBool = false;
 
         gameMechanic.PetsCount ++;
@@ -48,7 +48,8 @@ public class PetScr : MonoBehaviour
         }
     }
     void FixedUpdate() 
-    {        
+    {     
+        animator.SetFloat("movement", PetMovement.z);   
         if(!playerScr.ManualPauseGame)
         {
             if(!gameMenuScr.PauseGame)

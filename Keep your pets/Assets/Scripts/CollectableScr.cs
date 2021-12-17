@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class CollectableScr : MonoBehaviour
 {
+    public float rotationSpeed;
     void Start()
     {
         
@@ -11,7 +12,7 @@ public class CollectableScr : MonoBehaviour
 
     void Update()
     {
-        
+		transform.Rotate (Vector3.up * rotationSpeed * Time.deltaTime, Space.World);
     }
     void OnTriggerEnter(Collider other) 
     {

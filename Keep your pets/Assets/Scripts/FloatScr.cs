@@ -5,8 +5,8 @@ using UnityEngine;
 public class FloatScr : MonoBehaviour
 {
     public Rigidbody PlayerRb;
-    public float depthBeforeSubmerged = 1f;
-    public float displacementAmount = 3f;
+    public float depthBeforeSubmerged;
+    public float displacementAmount;
     
     void FixedUpdate() 
     {

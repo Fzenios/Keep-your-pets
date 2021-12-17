@@ -9,17 +9,18 @@ public class GameMechanic : MonoBehaviour
     public int PetsCount;
     public int CoinsCount;
     public int FinalCoinsCount;
-    public float TotalCoins;
+    public float TotalCoins, CurrentTotalCoins;
     float ScoreCounting, CoinsToGive;
     public TMP_Text Coinstxt, FinalCoinsTxt, TotalCoinsTxt;
     public bool ShowScore, CollectCoinsBool;
-    public GameObject CoinsObj, FinalScoreObj, TotalCoinsObj, CollectBtnObj, NextLvlBtnObj;
+    public GameObject CoinsObj, FinalScoreObj, TotalCoinsObj, CollectBtnObj, NextLvlBtnObj, FinalCoinObj;
 
     void Start()
     {
         ShowScore = false;
         ScoreCounting = 0;
         TotalCoins = 0;
+        CurrentTotalCoins = TotalCoins;
     }
 
     void Update()
@@ -30,7 +31,7 @@ public class GameMechanic : MonoBehaviour
        {
            FinalScoreObj.SetActive(true);
             if(ScoreCounting < FinalCoinsCount)
-                ScoreCounting += Time.deltaTime * 40;
+                ScoreCounting += Time.deltaTime * 70;
             else 
             {
                 ShowScore = false;
@@ -43,18 +44,22 @@ public class GameMechanic : MonoBehaviour
        {
            if(ScoreCounting > 0)
            {
-                ScoreCounting -= Time.deltaTime * 70;
-                TotalCoins += Time.deltaTime * 70;
+                ScoreCounting -= Time.deltaTime * 100;
+                CurrentTotalCoins += Time.deltaTime * 100;
                 if(ScoreCounting < 0)
+                {
                     ScoreCounting = 0;
+                }
            }
            else
            {
+               ScoreCounting = TotalCoins;
+               FinalCoinObj.SetActive(false);
                NextLvlBtnObj.SetActive(true);
                CollectCoinsBool = false;
            }
             FinalCoinsTxt.text = "COINS: " + ScoreCounting.ToString("0");
-            TotalCoinsTxt.text = TotalCoins.ToString("0");
+            TotalCoinsTxt.text = CurrentTotalCoins.ToString("0");
        }
     }
 
@@ -62,6 +67,7 @@ public class GameMechanic : MonoBehaviour
     {
         CoinsToGive = FinalCoinsCount;
         ScoreCounting = FinalCoinsCount;
+        TotalCoins += FinalCoinsCount;
 
         CollectCoinsBool = true;
         TotalCoinsObj.SetActive(true);
@@ -69,7 +75,7 @@ public class GameMechanic : MonoBehaviour
     }
     public void NextLevel()
     {
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene(1);
     }
     
 }

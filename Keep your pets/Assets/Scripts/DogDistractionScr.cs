@@ -4,20 +4,32 @@ using UnityEngine;
 
 public class DogDistractionScr : MonoBehaviour
 {
-    // Start is called before the first frame update
+    Rigidbody CatRb;
+    public Vector3 catmove;
     void Start()
     {
-        
+        CatRb = GetComponent<Rigidbody>();
+        CatChase();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+
     void OnTriggerEnter(Collider other) 
     {
+        if(other.tag == "Pet")
+        {
+            CatChase();
+            Destroy(gameObject, 2);
+        }
+    }
+    void CatChase()
+    {
+        if(transform.position.x > 0)
+            catmove.x = 15;
+            //transform.rotation = 60;
+        else
+            catmove.x = -15;
         
+        CatRb.AddForce(catmove, ForceMode.Impulse);
     }
     
 }

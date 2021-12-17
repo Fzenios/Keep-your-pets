@@ -4,16 +4,21 @@ using UnityEngine;
 
 public class DogSpownerScr : MonoBehaviour
 {
-    PlayerScr playerScr;
+    public float movementSpeed = 3;
+    public GameObject RotatePoint;
+    public Vector3 Rotateanotherpoint;
+    Animator anim;
+    Rigidbody rb;
     void Start()
     {
-        playerScr = GameObject.FindObjectOfType<PlayerScr>();
+        anim = GetComponent<Animator>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        anim.SetFloat("movement", 1);
+        transform.RotateAround(RotatePoint.transform.position, Rotateanotherpoint, movementSpeed * Time.deltaTime);
     }
     void OnTriggerEnter(Collider other) 
     {
