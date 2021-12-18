@@ -5,6 +5,11 @@ using UnityEngine.SceneManagement;
 
 public class ButtonsScr : MonoBehaviour
 {   
+    public SoundsScr soundsScr;
+    void Start() 
+    {
+        soundsScr.IntroSong();
+    }
 
     public void PlayGame()
     {

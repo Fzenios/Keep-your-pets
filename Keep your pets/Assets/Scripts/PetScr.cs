@@ -16,15 +16,17 @@ public class PetScr : MonoBehaviour
     GameMenuScr gameMenuScr;
     PlayerScr playerScr;
     public Animator animator;
+    SoundsScr soundsScr;
     void Start()
     {
         PetRb = GetComponent<Rigidbody>();
         PlayerPos = GameObject.FindGameObjectWithTag("Owner").transform;
         lineRenderer = gameObject.GetComponent<LineRenderer>();
         gameMechanic = GameObject.FindObjectOfType<GameMechanic>();
-        joystick = GameMechanic.FindObjectOfType<Joystick>();
+        joystick = GameObject.FindObjectOfType<Joystick>();
         gameMenuScr = GameObject.FindObjectOfType<GameMenuScr>();
         playerScr = GameObject.FindObjectOfType<PlayerScr>();
+        soundsScr = GameObject.FindObjectOfType<SoundsScr>();
         FinaleBool = false;
 
         gameMechanic.PetsCount ++;
@@ -66,16 +68,26 @@ public class PetScr : MonoBehaviour
     {
         if(other.collider.tag == "Road")
         {
-            Destroy(gameObject);
             gameMechanic.PetsCount--;
+            Destroy(gameObject,2);
+            lineRenderer.enabled = false;
+            if(transform.position.x > 0)
+            {
+                transform.Rotate(0,90,0); 
+                PetRb.AddForce(new Vector3(15,0,0),ForceMode.Impulse);
+            }
+            else
+            {
+                transform.Rotate(0,-90,0); 
+                PetRb.AddForce(new Vector3(-15,0,0),ForceMode.Impulse);            
+            }
         }
     }
     void OnTriggerEnter(Collider other) 
     {
         if(other.tag == "Distraction")
         {
-            Destroy(gameObject);
-            gameMechanic.PetsCount--;
+            DogLoss();
         } 
         if(other.tag == "Finale")
         {
@@ -90,7 +102,14 @@ public class PetScr : MonoBehaviour
         }  
         if(other.tag == "Collectables")
         {
+            soundsScr.Coin();
             gameMechanic.CoinsCount ++;
         }       
+    }
+    public void DogLoss()
+    {
+        soundsScr.Cat();
+        gameMechanic.PetsCount--;
+        Destroy(gameObject);
     }
 }

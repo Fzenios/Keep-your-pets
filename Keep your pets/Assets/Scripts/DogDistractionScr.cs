@@ -5,11 +5,11 @@ using UnityEngine;
 public class DogDistractionScr : MonoBehaviour
 {
     Rigidbody CatRb;
-    public Vector3 catmove;
+    Vector3 catmove;
+    public GameObject PetChase;
     void Start()
     {
         CatRb = GetComponent<Rigidbody>();
-        CatChase();
     }
 
 
@@ -21,13 +21,19 @@ public class DogDistractionScr : MonoBehaviour
             Destroy(gameObject, 2);
         }
     }
-    void CatChase()
+    public void CatChase()
     {
+        PetChase.SetActive(true);
         if(transform.position.x > 0)
+        {
             catmove.x = 15;
-            //transform.rotation = 60;
+            transform.Rotate(0,-110,0); 
+        }
         else
+        {
             catmove.x = -15;
+            transform.Rotate(0,110,0); 
+        }
         
         CatRb.AddForce(catmove, ForceMode.Impulse);
     }

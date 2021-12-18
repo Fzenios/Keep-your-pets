@@ -7,16 +7,20 @@ public class CameraScr : MonoBehaviour
     public Transform Target;
     public Vector3 offset;
     public float SmoothMove;
+    public bool Follow;
     void Start()
     {
-        //offset = transform.position - Target.position;
+        Follow = true;  
     }
 
     void LateUpdate() 
     {
-        Vector3 PositionToBe = Target.position + offset;
-        Vector3 SmoothedPosition = Vector3.Lerp(transform.position, PositionToBe, Time.deltaTime * SmoothMove);        
-        transform.position = SmoothedPosition;
+        if(Follow)
+        {
+            Vector3 PositionToBe = Target.position + offset;
+            Vector3 SmoothedPosition = Vector3.Lerp(transform.position, PositionToBe, Time.deltaTime * SmoothMove);        
+            transform.position = SmoothedPosition;
+        }
     }
     
 }

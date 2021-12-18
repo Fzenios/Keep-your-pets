@@ -14,6 +14,7 @@ public class GameMechanic : MonoBehaviour
     public TMP_Text Coinstxt, FinalCoinsTxt, TotalCoinsTxt;
     public bool ShowScore, CollectCoinsBool;
     public GameObject CoinsObj, FinalScoreObj, TotalCoinsObj, CollectBtnObj, NextLvlBtnObj, FinalCoinObj;
+    public SoundsScr soundsScr;
 
     void Start()
     {
@@ -21,6 +22,7 @@ public class GameMechanic : MonoBehaviour
         ScoreCounting = 0;
         TotalCoins = 0;
         CurrentTotalCoins = TotalCoins;
+        soundsScr.MainGameSong("Play");
     }
 
     void Update()
@@ -44,6 +46,7 @@ public class GameMechanic : MonoBehaviour
        {
            if(ScoreCounting > 0)
            {
+
                 ScoreCounting -= Time.deltaTime * 100;
                 CurrentTotalCoins += Time.deltaTime * 100;
                 if(ScoreCounting < 0)
@@ -57,6 +60,7 @@ public class GameMechanic : MonoBehaviour
                FinalCoinObj.SetActive(false);
                NextLvlBtnObj.SetActive(true);
                CollectCoinsBool = false;
+               soundsScr.CoinsCollect("Stop");
            }
             FinalCoinsTxt.text = "COINS: " + ScoreCounting.ToString("0");
             TotalCoinsTxt.text = CurrentTotalCoins.ToString("0");
@@ -65,6 +69,8 @@ public class GameMechanic : MonoBehaviour
 
     public void CollectCoins()
     {
+        soundsScr.CoinsCollect("Play");
+        soundsScr.MainGameSong("Stop");
         CoinsToGive = FinalCoinsCount;
         ScoreCounting = FinalCoinsCount;
         TotalCoins += FinalCoinsCount;
@@ -77,5 +83,8 @@ public class GameMechanic : MonoBehaviour
     {
         SceneManager.LoadScene(1);
     }
-    
+    public void RestartLevel()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }    
 }

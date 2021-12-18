@@ -20,6 +20,11 @@ public class PlayerScr : MonoBehaviour
     public GameObject StartCounter;
     public Animator animator;
     public GameObject PauseBtnObj;
+    public GameObject Car;
+    public Transform SpownCar;
+    public CameraScr cameraScr;
+    public GameObject LostGameObj;
+    public SoundsScr soundsScr;
 
     void Start()
     {
@@ -79,20 +84,55 @@ public class PlayerScr : MonoBehaviour
         if(other.tag == "Collectables")
         {
             gameMechanic.CoinsCount ++;
+            soundsScr.Coin();
         }
         if(other.tag == "Multiplier")
         {
             MultiplierCount ++;
         }
+        if(other.tag == "Distraction")
+        {
+            if(gameMechanic.PetsCount > 0)
+            {
+                PetScr petScr;
+                petScr = GameObject.FindObjectOfType<PetScr>();
+                petScr.DogLoss();
+                DogDistractionScr dogDistractionScr;
+                dogDistractionScr = other.GetComponent<DogDistractionScr>();
+                dogDistractionScr.CatChase();
+            }
+            else if(gameMechanic.PetsCount == 0)
+            {
+                soundsScr.Cat();
+                cameraScr.Follow = false;
+                PlayerRb.AddForce(new Vector3(0,40,0),ForceMode.Impulse);
+                Destroy(gameObject,2);
+                StartCoroutine(LostGame());
+            }
+        }
+        
     }
+    void OnCollisionEnter(Collision other)
+    {
+        if(other.collider.tag == "Road")
+        {
+            soundsScr.CarHorn();
+            StartCoroutine(LostGame());
+            Instantiate(Car, SpownCar.position, Quaternion.identity);
+            cameraScr.Follow = false;
+            PlayerRb.AddForce(new Vector3(0,40,0),ForceMode.Impulse);
+            Destroy(gameObject,2);
+        }
+    }
+
     IEnumerator PlayerPush()
     {   
         yield return new WaitForSeconds(0.5f);
         Finale = true;
         
         int PlayerBoostX = 60 + (gameMechanic.PetsCount * 10);
-        if(PlayerBoostX >= 160)
-            PlayerBoostX = 160;
+        if(PlayerBoostX >= 170)
+            PlayerBoostX = 170;
 
         PlayerBoost = new Vector3(0, 40, PlayerBoostX);
         PlayerRb.AddForce(PlayerBoost, ForceMode.Impulse);
@@ -104,12 +144,19 @@ public class PlayerScr : MonoBehaviour
     }
     IEnumerator CountScore()
     {   
-        yield return new WaitForSeconds(13f);
-        PauseBtnObj.SetActive(false);
-        gameMechanic.FinalCoinsCount = gameMechanic.CoinsCount * MultiplierCount;    
-        gameMechanic.ShowScore = true;
-        gameMechanic.CoinsObj.SetActive(false);
-        gameMechanic.FinalScoreObj.SetActive(true);
+        yield return new WaitForSeconds(10f);
+        if(gameMechanic.PetsCount > 1)
+        {
+            PauseBtnObj.SetActive(false);
+            gameMechanic.FinalCoinsCount = gameMechanic.CoinsCount * MultiplierCount;    
+            gameMechanic.ShowScore = true;
+            gameMechanic.CoinsObj.SetActive(false);
+            gameMechanic.FinalScoreObj.SetActive(true);
+        }
+        else
+        {
+            StartCoroutine(LostGame());
+        }
     }
     IEnumerator StartGame()
     {   
@@ -120,11 +167,18 @@ public class PlayerScr : MonoBehaviour
         ManualPauseGame = false;
         StartCounter.SetActive(false);
         PlayerMovement.z = FrontSpeed;
-        
+    }
+    IEnumerator LostGame()
+    {
+        yield return new WaitForSeconds(1f);
+        PauseBtnObj.SetActive(false);
+        LostGameObj.SetActive(true);
+
     }
 
     public void DogSpown()
     {      
         Instantiate(DogPre, DogSpownPos.position, Quaternion.identity, transform.parent);
+        soundsScr.Dog();
     }
 }
