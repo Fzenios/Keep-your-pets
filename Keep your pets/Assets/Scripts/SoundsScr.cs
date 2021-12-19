@@ -10,6 +10,8 @@ public class SoundsScr : MonoBehaviour
     public Sound[] Sounds;
     public AudioMixerGroup mixerGroup;
     public AudioMixer Mixer;
+    public AllData allData;
+
     void Awake() 
     {
         foreach (Sound s in Sounds)
@@ -19,8 +21,6 @@ public class SoundsScr : MonoBehaviour
             s.source.clip = s.Clip; 
             s.source.outputAudioMixerGroup = mixerGroup; 
         }
-        //slider.value = volumelock;
-        //AudioPLayer.Play(Sounds[1]);
     }
 
     public void IntroSong()
@@ -30,9 +30,7 @@ public class SoundsScr : MonoBehaviour
         {
             s.source.Play();
             s.source.loop = true;
-        }
-        
-            
+        }    
     }
     public void MainGameSong(string Play)
     {
@@ -81,12 +79,10 @@ public class SoundsScr : MonoBehaviour
             {
                 s.source.Play();
                 s.source.loop = true;
-                Debug.Log("play");
             }
             else if (Play == "Stop")
             {
                 s.source.Stop();
-                Debug.Log("stop");
             }
         }  
     }
@@ -96,27 +92,12 @@ public class SoundsScr : MonoBehaviour
         if(s != null)
             s.source.PlayOneShot(s.source.clip);
     }
-    void Update() 
-    {
-        /*if(TimerSound != null)
-        {
-            if(gameMechanicsScr.PauseWindow.activeSelf)
-                TimerSound.source.Pause();
-            else
-                TimerSound.source.UnPause();
-        }*/
-    }
-   /* public void Mute()
-    {   
-        if(extradatahere.dataForSaving.Sound)
-            {
-                Mixer.SetFloat("Volume",0);
-            }
+    public void MuteBtn()
+    {  
+        allData.Mute =! allData.Mute;        
+        if(allData.Mute)
+            Mixer.SetFloat("Volume",-80);
         else
-            {
-                Mixer.SetFloat("Volume",-80);
-            }
-        
-    }*/
-
+            Mixer.SetFloat("Volume",0);
+    }
 }

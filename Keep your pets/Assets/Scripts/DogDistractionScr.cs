@@ -23,6 +23,8 @@ public class DogDistractionScr : MonoBehaviour
     }
     public void CatChase()
     {
+        Collider collider = GetComponent<Collider>();
+        collider.enabled = false;
         PetChase.SetActive(true);
         if(transform.position.x > 0)
         {

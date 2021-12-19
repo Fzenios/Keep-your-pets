@@ -10,24 +10,26 @@ public class GameMechanic : MonoBehaviour
     public int CoinsCount;
     public int FinalCoinsCount;
     public float TotalCoins, CurrentTotalCoins;
-    float ScoreCounting, CoinsToGive;
+    float ScoreCounting;
     public TMP_Text Coinstxt, FinalCoinsTxt, TotalCoinsTxt;
     public bool ShowScore, CollectCoinsBool;
     public GameObject CoinsObj, FinalScoreObj, TotalCoinsObj, CollectBtnObj, NextLvlBtnObj, FinalCoinObj;
     public SoundsScr soundsScr;
+    public AllData allData;
 
     void Start()
     {
         ShowScore = false;
         ScoreCounting = 0;
-        TotalCoins = 0;
-        CurrentTotalCoins = TotalCoins;
+        CurrentTotalCoins = allData.TotalCoins;
         soundsScr.MainGameSong("Play");
+        TotalCoinsTxt.text = allData.TotalCoins.ToString();
     }
 
     void Update()
     {
         Coinstxt.text = "Coins: " + CoinsCount;
+
         
         if(ShowScore)
        {
@@ -56,7 +58,7 @@ public class GameMechanic : MonoBehaviour
            }
            else
            {
-               ScoreCounting = TotalCoins;
+               ScoreCounting = allData.TotalCoins;
                FinalCoinObj.SetActive(false);
                NextLvlBtnObj.SetActive(true);
                CollectCoinsBool = false;
@@ -71,9 +73,8 @@ public class GameMechanic : MonoBehaviour
     {
         soundsScr.CoinsCollect("Play");
         soundsScr.MainGameSong("Stop");
-        CoinsToGive = FinalCoinsCount;
         ScoreCounting = FinalCoinsCount;
-        TotalCoins += FinalCoinsCount;
+        allData.TotalCoins += FinalCoinsCount;
 
         CollectCoinsBool = true;
         TotalCoinsObj.SetActive(true);

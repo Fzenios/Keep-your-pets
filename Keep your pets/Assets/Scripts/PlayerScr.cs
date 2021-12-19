@@ -30,7 +30,7 @@ public class PlayerScr : MonoBehaviour
     {
         PlayerRb = GetComponent<Rigidbody>();
         Finale = false;
-        MultiplierCount = 1;
+        MultiplierCount = 0;
         PlayerMovement.z = 0;
         gameMenuScr.PauseGame = false;
         StartCoroutine(StartGame());
@@ -41,9 +41,9 @@ public class PlayerScr : MonoBehaviour
         PlayerMovement.x = Input.GetAxisRaw("Horizontal");     
         
         //ForMobile
-        if(joystick.Horizontal > 0.7f)
+        if(joystick.Horizontal > 0.2f)
             PlayerMovement.x = joystick.Horizontal;            
-        else if(joystick.Horizontal < -0.7)
+        else if(joystick.Horizontal < -0.2)
             PlayerMovement.x = joystick.Horizontal;  
         /*else 
         PlayerMovement.x = 0;  */
@@ -145,7 +145,7 @@ public class PlayerScr : MonoBehaviour
     IEnumerator CountScore()
     {   
         yield return new WaitForSeconds(10f);
-        if(gameMechanic.PetsCount > 1)
+        if(gameMechanic.PetsCount > 0 && MultiplierCount > 0)
         {
             PauseBtnObj.SetActive(false);
             gameMechanic.FinalCoinsCount = gameMechanic.CoinsCount * MultiplierCount;    
