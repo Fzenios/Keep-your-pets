@@ -1547,6 +1547,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: CanvasLevel
       objectReference: {fileID: 0}
+    - target: {fileID: 1718069146854857134, guid: 34aeeed2adb0de744bf207a20c52c380, type: 3}
+      propertyPath: m_UiScaleMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1718069146854857134, guid: 34aeeed2adb0de744bf207a20c52c380, type: 3}
+      propertyPath: m_MatchWidthOrHeight
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1718069146854857134, guid: 34aeeed2adb0de744bf207a20c52c380, type: 3}
+      propertyPath: m_ReferenceResolution.x
+      value: 1920
+      objectReference: {fileID: 0}
+    - target: {fileID: 1718069146854857134, guid: 34aeeed2adb0de744bf207a20c52c380, type: 3}
+      propertyPath: m_ReferenceResolution.y
+      value: 4000
+      objectReference: {fileID: 0}
     - target: {fileID: 1718069147093990793, guid: 34aeeed2adb0de744bf207a20c52c380, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.016046973
@@ -1587,6 +1603,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1919358247}
+    - target: {fileID: 1718069147595010664, guid: 34aeeed2adb0de744bf207a20c52c380, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -1149
+      objectReference: {fileID: 0}
     - target: {fileID: 3287608488315436236, guid: 34aeeed2adb0de744bf207a20c52c380, type: 3}
       propertyPath: m_RootOrder
       value: 0
